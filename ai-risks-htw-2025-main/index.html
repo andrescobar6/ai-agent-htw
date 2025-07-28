@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Risks & Vulnerabilities Workshop</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { opacity: 0.5; transform: translateX(-50%) scaleX(1); }
+            to { opacity: 1; transform: translateX(-50%) scaleX(1.5); }
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #b8b8d1;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        
+        .mission {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission::before {
+            content: '🎯';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 4rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .mission h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+        }
+        
+        .mission-text {
+            font-size: 1.1rem;
+            color: #e0e0f0;
+        }
+        
+        .blocks-container {
+            display: grid;
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .block {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .block1 { --accent-color: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
+        .block2 { --accent-color: linear-gradient(90deg, #4ecdc4, #7ed3d3); }
+        .block3 { --accent-color: linear-gradient(90deg, #45b7d1, #74c7e0); }
+        .block4 { --accent-color: linear-gradient(90deg, #96ceb4, #b5d6c7); }
+        
+        .block-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+        
+        .block-icon {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .block-info {
+            flex: 1;
+        }
+        
+        .block-number {
+            font-size: 0.9rem;
+            color: #b8b8d1;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .block-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .block-subtitle {
+            font-size: 1rem;
+            color: #4ecdc4;
+            font-weight: 500;
+        }
+        
+        .block-content {
+            color: #d0d0e0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-right: 10px;
+            border: 1px solid;
+        }
+        
+        .duration {
+            background: rgba(76, 205, 196, 0.2);
+            color: #4ecdc4;
+            border-color: rgba(76, 205, 196, 0.3);
+        }
+        
+        .duration::before {
+            content: '⏱️';
+            margin-right: 8px;
+        }
+        
+        .concepts {
+            background: rgba(76, 205, 196, 0.2);
+            color: #4ecdc4;
+            border-color: rgba(76, 205, 196, 0.3);
+        }
+        
+        .concepts::before {
+            content: '🧠';
+            margin-right: 8px;
+        }
+        
+        .hands-on {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .hands-on::before {
+            content: '🔧';
+            margin-right: 8px;
+        }
+        
+        .journey {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(76, 205, 196, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .journey::before {
+            content: '🚀';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: #0f0f23;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .journey h2 {
+            color: #4ecdc4;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .journey-text {
+            font-size: 1.1rem;
+            color: #e0e0f0;
+        }
+        
+        .highlight {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        
+        .capstone-note {
+            background: rgba(150, 206, 180, 0.1);
+            border-left: 4px solid #96ceb4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+        }
+        
+        .capstone-note::before {
+            content: '💡 ';
+            font-size: 1.2rem;
+        }
+        
+        .links-section {
+            background: linear-gradient(135deg, rgba(76, 205, 196, 0.1), rgba(255, 107, 107, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .links-section::before {
+            content: '🔗';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: #0f0f23;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .links-section h2 {
+            color: #4ecdc4;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .link-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .link-card h3 {
+            color: #4ecdc4;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .link-card p {
+            color: #d0d0e0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .block-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .block {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">AI RISKS & VULNERABILITIES</h1>
+            <p class="subtitle">Navigating the Complex Landscape of AI Security</p>
+        </header>
+        
+        <section class="mission">
+            <h2>Mission Objective</h2>
+            <p class="mission-text">
+                Equip future project managers and data scientists with the <span class="highlight">strategic mindset</span> to analyze AI use cases holistically. You'll learn to anticipate risks before they manifest and architect robust mitigation strategies from day one. This intensive workshop culminates in a <strong>capstone project</strong> where you'll demonstrate your newfound expertise through a 10-minute presentation showcasing your ability to dissect, analyze, and fortify AI implementations.
+            </p>
+        </section>
+        
+        <section class="journey">
+            <h2>Your Learning Journey</h2>
+            <p class="journey-text">
+                From understanding fundamental AI vulnerabilities to crafting your own intelligent agents, you'll traverse the complete spectrum of AI risk management. Each block builds upon the previous, creating a comprehensive foundation for real-world application.
+            </p>
+        </section>
+        
+        <div class="blocks-container">
+            <div class="block block1">
+                <div class="block-header">
+                    <div class="block-icon">🛡️</div>
+                    <div class="block-info">
+                        <div class="block-number">BLOCK 01 // FRIDAY MORNING</div>
+                        <div class="block-title">Foundation</div>
+                        <div class="block-subtitle">AI landscape deep dive</div>
+                    </div>
+                </div>
+                <div class="block-content">
+                    Embark on a comprehensive exploration of the AI ecosystem. We'll dissect use cases across industries, categorize AI implementations, and map the multidimensional risk landscape. Through interactive discussions and hands-on exercises, you'll develop a systematic approach to identifying vulnerabilities and crafting detection mechanisms. This foundational session transforms abstract concepts into practical frameworks you can immediately apply.
+                </div>
+                <div class="badge concepts">Concepts</div>
+                <div class="badge hands-on">Hands-on</div>
+            </div>
+            
+            <div class="block block2">
+                <div class="block-header">
+                    <div class="block-icon">🤖</div>
+                    <div class="block-info">
+                        <div class="block-number">BLOCK 02 // FRIDAY AFTERNOON</div>
+                        <div class="block-title">Agentic</div>
+                        <div class="block-subtitle">Building intelligent systems</div>
+                    </div>
+                </div>
+                <div class="block-content">
+                    Dive into the cutting edge of AI: autonomous agents. Understand how agentic AI amplifies both capabilities and risks compared to traditional AI systems. You'll construct your first agent from scratch, implement evaluation frameworks, and discover the unique vulnerabilities that emerge when AI systems gain autonomy. This hands-on exploration reveals both the promise and perils of self-directed AI.
+                </div>
+                <div class="badge concepts">Concepts</div>
+                <div class="badge hands-on">Hands-on</div>
+            </div>
+            
+            <div class="block block3">
+                <div class="block-header">
+                    <div class="block-icon">⚡</div>
+                    <div class="block-info">
+                        <div class="block-number">BLOCK 03 // FRIDAY LATE AFTERNOON</div>
+                        <div class="block-title">Capstone</div>
+                        <div class="block-subtitle">Project ignition phase</div>
+                    </div>
+                </div>
+                <div class="block-content">
+                    Transform theory into practice. Split up and select your challenge: conduct a comprehensive risk analysis of a real-world AI use case, or dive deep by implementing and then mitigating a specific vulnerability. This is where your creativity meets technical rigor, setting the stage for your capstone presentation.
+                    
+                    <div class="capstone-note">
+                        <strong>Capstone Options:</strong> Go broad with comprehensive analysis or narrow with vulnerability implementation—your choice, your expertise showcase.
+                    </div>
+                </div>
+                <div class="badge hands-on">Hands-on</div>
+            </div>
+            
+            <div class="block block4">
+                <div class="block-header">
+                    <div class="block-icon">🎯</div>
+                    <div class="block-info">
+                        <div class="block-number">BLOCK 04 // MONDAY FULL DAY</div>
+                        <div class="block-title">Show and Tell</div>
+                        <div class="block-subtitle">Project completion and presentation</div>
+                    </div>
+                </div>
+                <div class="block-content">
+                    The culmination of your learning journey. Bring your questions, finish your projects, and present your work. Discuss with others what could be done next and how to improve your risk assessments. This isn't just presentation—it's demonstration of your ability to think like an AI risk strategist. Each presentation becomes a case study, expanding everyone's risk intelligence.
+                </div>
+                <div class="badge hands-on">Hands-on</div>
+            </div>
+        </div>
+        
+        <section class="links-section">
+            <h2>Additional Resources</h2>
+            <div class="links-grid">
+                <a href="https://github.com/your-username/ai-risks-htw-2025" class="link-card" target="_blank">
+                    <h3>📚 Repository</h3>
+                    <p>Access the complete workshop materials, code examples, and supporting documentation on GitHub.</p>
+                </a>
+                <a href="ai_landscape_infographic.html" class="link-card">
+                    <h3>🗺️ AI Landscape Infographic</h3>
+                    <p>Explore our visual representation of the AI ecosystem and risk landscape to better understand the workshop context.</p>
+                </a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
